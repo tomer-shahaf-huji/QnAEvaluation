@@ -1,0 +1,5 @@
+OpenAIClient:
+  max_response_tokens: 10
+  temperature: 0
+  instruct_deployment_name: 'LLM-X-Davinci3'
+  embedding_deployment_name: 'LLM-X-Embedding'

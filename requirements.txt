@@ -1,0 +1,15 @@
+bert_score
+datasets
+nltk
+numpy
+openai
+pandas
+pytest
+rouge
+rouge_score
+sacrebleu
+scipy
+tabulate
+transformers
+typing
+yaml
