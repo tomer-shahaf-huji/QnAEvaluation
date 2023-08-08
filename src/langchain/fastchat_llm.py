@@ -1,7 +1,11 @@
 import json
 
+from typing import Any, Mapping
+import requests
 from langchain.llms.base import LLM
 from pydantic import PrivateAttr
+from requests.models import Response
+
 
 DEFAULT_TEMPRATURE = 0.2
 
@@ -31,22 +35,24 @@ class FastchatLLM(LLM):
 
     def _call(self, prompt: str, **kwargs: Any): -> str:
         model_request_payload = select._build_model_request_payload(prompt)
-        model_request_payload = self.post(FASTCHAT_URL, json=model_request_payload.dict())
-        response = self.raise_for_status()
 
-        content = _get_model_response_from_streaam(response)
+        response = requests.post(FASTCHAT_URL, json=model_request_payload.dict())
+        response.raise_for_status()
+
+        content = _get_model_response_from_stream(response)
+
         return content
 
     def _build_model_request_payload(self, prompt: str) -> FastChatRequestPayload:
         payload = FastChatRequestPayload(model=self._fastchat_model, prompt=prompt, temprature=self._temprature)
         return payload
 
-    def _get_model_response_from_stream(self, response: Response) -> str:
-        text_response = TEXT_RESPONSE_DEFAULT_VALUE
-        for chunk in response.iter_lines(decode_unicode=False, delimiter=RESPONSE_CHUNK_DELIMIETER):
-            if chunk:
-                data = json.loads(chunk.decode())
-                chunk_text_response = data[TEXT_FIELD_NAME_IN_RESPONSE_CHUNK]
-                text_response = chunk_text_response
+def _get_model_response_from_stream(response: Response) -> str:
+    text_response = TEXT_RESPONSE_DEFAULT_VALUE
+    for chunk in response.iter_lines(decode_unicode=False, delimiter=RESPONSE_CHUNK_DELIMIETER):
+        if chunk:
+            data = json.loads(chunk.decode())
+            chunk_text_response = data[TEXT_FIELD_NAME_IN_RESPONSE_CHUNK]
+            text_response = chunk_text_response
 
-        return text_response
+    return text_response
