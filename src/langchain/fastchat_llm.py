@@ -6,7 +6,7 @@ from langchain.llms.base import LLM
 from pydantic import PrivateAttr
 from requests.models import Response
 
-
+FASTCHAT_URL = "TODO"
 DEFAULT_TEMPRATURE = 0.2
 
 RESPONSE_CHUNK_DELIMIETER = b"\0"
@@ -15,14 +15,15 @@ TEXT_RESPONSE_DEFAULT_VALUE = ''
 FASTCHAT_LLM_NAME = "fastchat_llm"
 LLM_DEFAULT_IDENTIFYING_PARAMETERS = {}
 
+
 class FastchatLLM(LLM):
     _fastchat_model: str = PrivateAttr(default_factory=str)
     _temprature: str = PrivateAttr(default_factory=str)
 
-    def __init__(self, fastchat_model: str, temprature: float = DEFAULT_TEMPRATURE):
+    def __init__(self, fastchat_model: str, temperature: float = DEFAULT_TEMPRATURE):
         super().__init__()
         self._fastchat_model = fastchat_model
-        self._temprature = temprature
+        self._temperature = temperature
 
 
     @property
@@ -33,8 +34,8 @@ class FastchatLLM(LLM):
     def _identyfing_params(self) -> Mapping[str, Any]:
         return LLM_DEFAULT_IDENTIFYING_PARAMETERS
 
-    def _call(self, prompt: str, **kwargs: Any): -> str:
-        model_request_payload = select._build_model_request_payload(prompt)
+    def _call(self, prompt: str, **kwargs: Any) -> str:
+        model_request_payload = self._build_model_request_payload(prompt)
 
         response = requests.post(FASTCHAT_URL, json=model_request_payload.dict())
         response.raise_for_status()
@@ -46,6 +47,7 @@ class FastchatLLM(LLM):
     def _build_model_request_payload(self, prompt: str) -> FastChatRequestPayload:
         payload = FastChatRequestPayload(model=self._fastchat_model, prompt=prompt, temprature=self._temprature)
         return payload
+
 
 def _get_model_response_from_stream(response: Response) -> str:
     text_response = TEXT_RESPONSE_DEFAULT_VALUE
