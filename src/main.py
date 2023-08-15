@@ -1,4 +1,4 @@
-from src.llms_api.openai_client import OpenAIClient
+from src.openai_client import OpenAIClient
 
 if __name__ == '__main__':
     client = OpenAIClient()
