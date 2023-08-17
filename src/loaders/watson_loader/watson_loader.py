@@ -1,9 +1,9 @@
 from typing import List
 from langchain.document_loaders.text import TextLoader
 from langchain.schema import Document
-from loaders.watson_loader.constants import FILE_ENCODING_FORMAT, GIT_DIRECTORY, VALID_CODE_FILE_EXTENSIONS
-from loaders.zip_loader.zip_loader import ZipLoader
-from utils.file_extension_utils import extract_file_extension
+from src.loaders.watson_loader.constants import FILE_ENCODING_FORMAT, GIT_DIRECTORY, VALID_CODE_FILE_EXTENSIONS
+from src.loaders.zip_loader.zip_loader import ZipLoader
+from src.utils.file_extension_utils import extract_file_extension
 
 
 class WatsonLoader(ZipLoader):
