@@ -1,11 +1,13 @@
-import ABC, abstractmethod
+from abc import ABC, abstractmethod
+
 from typing import List
 from langchain.docstore.document import Document
 from langchain.document_loaders.base import BaseLoader
-from loaders.exception import LoaderError
-from utils.file_utils import remove_directory, create_dir_with_filename
-from utils.zip_utils import unzip_files
-from utils.error_constants import NOT_IMPLEMENTED_MESSAGE
+
+from src.loaders.exception import LoaderError
+from src.utils.file_utils import remove_directory, create_dir_with_filename
+from src.utils.zip_utils import unzip_files
+from src.utils.error_constants import NOT_IMPLEMENTED_MESSAGE
 
 READ_DOCUMENTS_FUNCTION_NAME = "_read_documents"
 READ_DOCUMENTS_NOT_IMPLEMENTED_MESSAGE = NOT_IMPLEMENTED_MESSAGE.format(function_name=READ_DOCUMENTS_FUNCTION_NAME)

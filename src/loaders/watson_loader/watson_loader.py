@@ -1,4 +1,6 @@
+import os
 from typing import List
+
 from langchain.document_loaders.text import TextLoader
 from langchain.schema import Document
 from src.loaders.watson_loader.constants import FILE_ENCODING_FORMAT, GIT_DIRECTORY, VALID_CODE_FILE_EXTENSIONS
@@ -25,3 +27,6 @@ class WatsonLoader(ZipLoader):
 
 def _is_valid_code_file(file_extension: str) -> bool:
     return file_extension in VALID_CODE_FILE_EXTENSIONS
+
+if __name__ == "__main__":
+    print("Hello World!")
