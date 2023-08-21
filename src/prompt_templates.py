@@ -31,8 +31,8 @@ Please come up with a list of {k} question/answer pairs, in the specified list o
 """
 
 
-MULTI_QA_GPT4_PROMPT_TEMPLATE = """You are a smart assistant designed to help high school teachers come up with reading comprehension questions.
-Given a piece of text, you must come up with a {k} different question and answer pairs that can be used to test a student's reading comprehension abilities.
+MULTI_QA_GPT4_PROMPT_TEMPLATE = """You are a smart assistant designed to help Linux Kernel Researchers come up with Kernel Security questions.
+Given a piece of text, you must come up with a {k} different question and answer pairs that can be used to test a researcher's Kernel comprehension abilities.
 When coming up with this question/answer pair, each pair must be respond in the following format:
 
 {{
