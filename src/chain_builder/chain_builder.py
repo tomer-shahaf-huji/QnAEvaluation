@@ -14,6 +14,7 @@ from src.splitters.watson_splitter import WatsonSplitter
 
 EMBEDDINGS_MODEL_PATH = "krlvi/sentence-t5-base-nlpl-code_search_net"
 
+
 def build_chain(repo_zipfile_path: str) -> Chain:
     loader = WatsonLoader(repo_zipfile_path)
     documents = loader.load()
@@ -21,7 +22,7 @@ def build_chain(repo_zipfile_path: str) -> Chain:
     splitter = WatsonSplitter()
     splitted_documents = splitter.split_documents(documents)
 
-    embeddings = HuggingFaceEmbeddings(EMBEDDINGS_MODEL_PATH)
+    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDINGS_MODEL_PATH)
     vectorstore = FAISS.from_documents(splitted_documents, embeddings)
     retriever = vectorstore.as_retriever()
 
@@ -31,3 +32,5 @@ def build_chain(repo_zipfile_path: str) -> Chain:
     return chain
 
 
+if __name__ == "__main__":
+    build_chain("QnAEvaluation.zip")

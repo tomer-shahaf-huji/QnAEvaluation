@@ -1,0 +1,1 @@
+NOT_IMPLEMENTED_MESSAGE = "Function {function_name} is not implemented yet."

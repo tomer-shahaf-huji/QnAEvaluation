@@ -27,6 +27,3 @@ class WatsonLoader(ZipLoader):
 
 def _is_valid_code_file(file_extension: str) -> bool:
     return file_extension in VALID_CODE_FILE_EXTENSIONS
-
-if __name__ == "__main__":
-    print("Hello World!")

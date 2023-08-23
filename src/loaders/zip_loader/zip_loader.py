@@ -19,7 +19,7 @@ class ZipLoader(BaseLoader, ABC):
 
     def load(self) -> List[Document]:
         try:
-            unzipping_directory_path = _create_dir_with_filename(self.zipfile_path)
+            unzipping_directory_path = create_dir_with_filename(self._zipfile_path)
             unzip_files(self._zipfile_path, unzipping_directory_path)
             documents = self._read_documents(unzipping_directory_path)
             remove_directory(unzipping_directory_path)
