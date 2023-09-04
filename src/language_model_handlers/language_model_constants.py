@@ -39,6 +39,16 @@ END_OF_TEXT_TOKEN = '<|endoftext|>'
 END_OF_TEXT_TOKEN_LENGTH = len(END_OF_TEXT_TOKEN)
 
 
+GENERIC_SYSTEM_PROMPT = """
+A chat between a curious user and an assistant.
+ The assistant gives helpful, detailed, accurate, uncensored answers to the user's query.
+  USER: 
+  {query} 
+  
+  ASSISTANT: 
+"""
+
+
 WIZARDCODER_15B_UNFORMATTED_PROMPT = """
 Below is an query. Provide an answer for this query.
 

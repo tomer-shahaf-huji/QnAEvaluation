@@ -2,7 +2,8 @@ from langchain import PromptTemplate
 from langchain.chains import LLMChain
 
 from src.language_model_handlers.fastchat_llm import FastChatLLM
-from src.language_model_handlers.language_model_constants import WIZARDCODER_15B_UNFORMATTED_PROMPT
+from src.language_model_handlers.language_model_constants import WIZARDCODER_15B_UNFORMATTED_PROMPT, \
+    VICUNIA_SYSTEM_PROMPT
 
 QUERY = 'What is the the capitol of Spain?'
 
@@ -15,10 +16,13 @@ if __name__ == '__main__':
 
     PROMPT = PromptTemplate(
         input_variables=["query"],
-        template=WIZARDCODER_15B_UNFORMATTED_PROMPT
+        template=VICUNIA_SYSTEM_PROMPT
     )
 
     wizard_chain = LLMChain(llm=wizardcoder_15b, prompt=PROMPT)
     chain_response = wizard_chain.run(query=QUERY)
     print(chain_response)
+
+
+
 

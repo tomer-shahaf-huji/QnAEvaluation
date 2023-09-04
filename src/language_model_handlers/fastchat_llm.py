@@ -9,7 +9,7 @@ from requests.models import Response
 from src.language_model_handlers.language_model_constants import DEFAULT_TEMPERATURE, FASTCHAT_LLM_NAME, \
     LLM_DEFAULT_IDENTIFYING_PARAMETERS, TEXT_RESPONSE_DEFAULT_VALUE, RESPONSE_CHUNK_DELIMITER, \
     RESPONSE_CHUNK_TEXT_FIELD, END_OF_TEXT_TOKEN, END_OF_TEXT_TOKEN_LENGTH, DEFAULT_MAX_NEW_TOKENS, \
-    DEFAULT_RETURN_FULL_TEXT, WIZARDCODER_15B_UNFORMATTED_PROMPT
+    DEFAULT_RETURN_FULL_TEXT, GENERIC_SYSTEM_PROMPT
 
 
 class FastChatLLM(LLM):
@@ -39,9 +39,9 @@ class FastChatLLM(LLM):
     def _identifying_params(self) -> Mapping[str, Any]:
         return LLM_DEFAULT_IDENTIFYING_PARAMETERS
 
-    def _call(self, instruction: str, **kwargs: Any) -> str:
+    def _call(self, query: str, **kwargs: Any) -> str:
         request_headers = self._build_request_headers()
-        request_body = self._build_request_body(instruction)
+        request_body = self._build_request_body(query)
         response = requests.post(self._fastchat_url, headers=request_headers, json=request_body)
         response.raise_for_status()  # ToDo: Is this necessary?
         response_text = _get_model_response_from_stream(response)
@@ -51,8 +51,8 @@ class FastChatLLM(LLM):
         request_headers = {'User-Agent': 'FastChat Client', 'Host': self._model_host}
         return request_headers
 
-    def _build_request_body(self, instruction: str) -> dict:
-        prompt = WIZARDCODER_15B_UNFORMATTED_PROMPT.format(query=instruction)
+    def _build_request_body(self, query: str) -> dict:
+        prompt = GENERIC_SYSTEM_PROMPT.format(query=query)
         request_body = {
             "inputs": prompt,
             "parameters": {
